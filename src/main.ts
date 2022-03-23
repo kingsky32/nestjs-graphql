@@ -12,7 +12,19 @@ async function bootstrap() {
   // Get app config for cors settings and starting the app.
   const appConfig = app.get<AppConfigService>(AppConfigService);
   app.enableCors();
-  app.use(helmet());
+  app.use(helmet.crossOriginOpenerPolicy());
+  app.use(helmet.crossOriginResourcePolicy());
+  app.use(helmet.dnsPrefetchControl());
+  app.use(helmet.expectCt());
+  app.use(helmet.frameguard());
+  app.use(helmet.hidePoweredBy());
+  app.use(helmet.hsts());
+  app.use(helmet.ieNoOpen());
+  app.use(helmet.noSniff());
+  app.use(helmet.originAgentCluster());
+  app.use(helmet.permittedCrossDomainPolicies());
+  app.use(helmet.referrerPolicy());
+  app.use(helmet.xssFilter());
   app.use(cookieParser());
   app.setGlobalPrefix('v1');
   await app.listen(appConfig.port);
