@@ -26,6 +26,7 @@ type UserEntity {
   createdAt: DateTime!
   id: String!
   password: String!
+  role: String!
   updatedAt: DateTime!
   username: String!
 }

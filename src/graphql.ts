@@ -28,6 +28,7 @@ export class UserEntity {
     createdAt: DateTime;
     id: string;
     password: string;
+    role: string;
     updatedAt: DateTime;
     username: string;
 }

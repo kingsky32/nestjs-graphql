@@ -1,7 +1,4 @@
-import {
-  LoginRequestDto,
-  LoginResponseDto,
-} from '#authentication/dto/login.dto';
+import { LoginResponseDto } from '#authentication/dto/login.dto';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthConfigService } from '#config/authentication/config.service';

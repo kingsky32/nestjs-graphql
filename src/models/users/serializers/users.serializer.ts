@@ -1,7 +1,8 @@
 import { ModelEntity } from '#common/serializers/model.serializer';
 import { IUser } from '#models/users/interfaces/users.interface';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
+import { Role } from '#common/enums/role.enum';
 
 export const defaultUserGroupsForSerializing: string[] = ['user.timestamps'];
 
@@ -15,9 +16,13 @@ export class UserEntity extends ModelEntity implements IUser {
   id: string;
 
   @Field(() => String)
+  role: Role[];
+
+  @Field(() => String)
   username: string;
 
   @Field(() => String)
+  @Exclude()
   password: string;
 
   @Field(() => Date)
