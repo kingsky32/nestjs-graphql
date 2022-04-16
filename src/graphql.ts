@@ -13,22 +13,23 @@ export class LoginResponseDto {
 }
 
 export abstract class IMutation {
-    abstract createUser(password: string, username: string): UserEntity | Promise<UserEntity>;
+    abstract createUser(email: string, password: string, username: string): User | Promise<User>;
 
     abstract login(password: string, username: string): LoginResponseDto | Promise<LoginResponseDto>;
 }
 
 export abstract class IQuery {
-    abstract getUser(id: string): UserEntity | Promise<UserEntity>;
+    abstract getUser(id: string): User | Promise<User>;
 
-    abstract me(): UserEntity | Promise<UserEntity>;
+    abstract whoAmI(): User | Promise<User>;
 }
 
-export class UserEntity {
+export class User {
     createdAt: DateTime;
+    email: string;
     id: string;
     password: string;
-    role: string;
+    roles: string;
     updatedAt: DateTime;
     username: string;
 }

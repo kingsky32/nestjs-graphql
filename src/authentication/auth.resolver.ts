@@ -2,30 +2,32 @@ import {
   LoginRequestDto,
   LoginResponseDto,
 } from '#authentication/dto/login.dto';
-import { CurrentUser } from '#common/decorators/current-user.decorator';
-import { GqlAuthGuard } from '#common/guards/graphql-auth.guard';
-import { LocalAuthGuard } from '#common/guards/local-auth.guard';
-import { UserEntity } from '#models/users/serializers/users.serializer';
-import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthService } from '#authentication/auth.service';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from '#common/guards/gql-auth.guard';
+import { CurrentUser } from '#common/decorators/current-user.decorator';
+import { UsersService } from '#models/users/users.service';
+import { User } from '#models/users/entities/users.entity';
 
 @Resolver()
 export class AuthResolver {
-  constructor(private authService: AuthService) {}
-
-  @Query(() => UserEntity)
-  @UseGuards(GqlAuthGuard)
-  async me(@CurrentUser() user: UserEntity): Promise<UserEntity> {
-    return user;
-  }
+  constructor(
+    private authService: AuthService,
+    private usersService: UsersService,
+  ) {}
 
   @Mutation(() => LoginResponseDto)
-  @UseGuards(LocalAuthGuard)
   async login(
+    @Context() context,
     @Args() loginRequestDto: LoginRequestDto,
-    @CurrentUser() user: UserEntity,
   ): Promise<LoginResponseDto> {
-    return this.authService.login(user);
+    return this.authService.login(loginRequestDto);
+  }
+
+  @Query(() => User)
+  @UseGuards(GqlAuthGuard)
+  whoAmI(@CurrentUser() user: User) {
+    return this.usersService.get(user.id);
   }
 }

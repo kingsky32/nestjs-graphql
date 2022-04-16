@@ -7,4 +7,7 @@ export class CreateUserDto {
 
   @Field(() => String)
   password: string;
+
+  @Field(() => String)
+  email: string;
 }

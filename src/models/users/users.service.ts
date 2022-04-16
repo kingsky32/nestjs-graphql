@@ -1,6 +1,5 @@
 import bcrypt from '#common/utils/bcrypt';
 import { CreateUserDto } from '#models/users/dtos/users.dto';
-import { UserEntity } from '#models/users/serializers/users.serializer';
 import {
   ForbiddenException,
   Injectable,
@@ -8,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersRepository } from 'models/users/users.repository';
+import { User } from '#models/users/entities/users.entity';
 
 @Injectable()
 export class UsersService {
@@ -16,7 +16,7 @@ export class UsersService {
     private readonly usersRepository: UsersRepository,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     const user = await this.usersRepository.findOne({
       where: { username: createUserDto.username },
     });
@@ -29,7 +29,7 @@ export class UsersService {
     return this.usersRepository.save(createUserDto);
   }
 
-  async get(id: string): Promise<UserEntity | null> {
+  async get(id: string): Promise<User | null> {
     return await this.usersRepository.findOne({ where: { id } });
   }
 

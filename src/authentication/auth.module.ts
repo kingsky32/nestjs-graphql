@@ -1,14 +1,12 @@
-import { GqlStrategy } from '#authentication/graphql.strategy';
-import { LocalStrategy } from './local.strategy';
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
+import { JwtModule, JwtModuleAsyncOptions } from '@nestjs/jwt';
+import { AuthService } from '#authentication/auth.service';
+import { AuthResolver } from '#authentication/auth.resolver';
+import { JwtStrategy } from '#authentication/jwt.strategy';
 import { AuthConfigService } from '#config/authentication/config.service';
 import { AuthConfigModule } from '#config/authentication/config.module';
-import { JwtStrategy } from './jwt.strategy';
-import { JwtModule, JwtModuleAsyncOptions } from '@nestjs/jwt';
 import { UsersModule } from '#models/users/users.module';
-import { AuthResolver } from '#authentication/auth.resolver';
 
 @Module({
   imports: [
@@ -26,13 +24,7 @@ import { AuthResolver } from '#authentication/auth.resolver';
       inject: [AuthConfigService],
     } as JwtModuleAsyncOptions),
   ],
-  providers: [
-    AuthResolver,
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-    GqlStrategy,
-  ],
+  providers: [AuthResolver, AuthService, JwtStrategy],
   exports: [AuthService, JwtModule],
 })
 export class AuthModule {}
