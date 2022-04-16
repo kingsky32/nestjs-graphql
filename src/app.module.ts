@@ -7,6 +7,7 @@ import { PostgreDatabaseProviderModule } from '#providers/database/postgres/prov
 import { AuthModule } from '#authentication/auth.module';
 import { UsersModule } from '#models/users/users.module';
 import { RolesGuard } from '#common/guards/roles.guard';
+import { GqlThrottlerGuard } from '#common/guards/gql-throttler.guard';
 
 /**
  * Import and provide app related classes.
@@ -24,14 +25,10 @@ import { RolesGuard } from '#common/guards/roles.guard';
   ],
   controllers: [],
   providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: GqlAuthGuard,
-    // },
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: GqlThrottlerGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: GqlThrottlerGuard,
+    },
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
