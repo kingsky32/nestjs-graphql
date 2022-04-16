@@ -6,8 +6,7 @@ import { AppConfigModule } from '#config/app/config.module';
 import { PostgreDatabaseProviderModule } from '#providers/database/postgres/provider.module';
 import { AuthModule } from '#authentication/auth.module';
 import { UsersModule } from '#models/users/users.module';
-import { GqlAuthGuard } from '#common/guards/gql-auth.guard';
-import { RolesGuard } from "#common/guards/roles.guard";
+import { RolesGuard } from '#common/guards/roles.guard';
 
 /**
  * Import and provide app related classes.
